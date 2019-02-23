@@ -5,4 +5,7 @@
     <string name="second_answer">Second Answer</string>
     <string name="third_answer">Third Answer</string>
     <string name="fourth_answer">Fourth Answer</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
