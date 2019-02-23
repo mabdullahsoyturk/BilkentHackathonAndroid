@@ -9,4 +9,12 @@
     <string name="initial_value">19</string>
     <string name="max_value">20</string>
     <string name="content_description">Content Description</string>
+    <string name="art">Sanat</string>
+    <string name="culture">Kültür</string>
+    <string name="geography">Coğrafya</string>
+    <string name="history">Tarih</string>
+    <string name="literature">Literature</string>
+    <string name="music">Müzik</string>
+    <string name="sport">Spor</string>
+    <string name="cinema">Sinema</string>
 </resources>
