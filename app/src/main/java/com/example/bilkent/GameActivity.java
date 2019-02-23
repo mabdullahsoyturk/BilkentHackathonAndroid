@@ -1,6 +1,7 @@
 package com.example.bilkent;
 
 import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -26,11 +27,13 @@ public class GameActivity extends AppCompatActivity implements WaitFragment.OnFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game);
         mGameState = GameState.ConnectionTrying;
         waitFragment = new WaitFragment();
+        triviaGameFragment = new TriviaGameFragment();
         FragmentManager manager = getSupportFragmentManager();
         transaction = manager.beginTransaction();
-        transaction.replace(android.R.id.content, waitFragment, "Hello");
+        transaction.replace(R.id.container, waitFragment, "Hello");
         transaction.commit();
     }
 
