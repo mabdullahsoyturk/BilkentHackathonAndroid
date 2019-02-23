@@ -9,4 +9,5 @@
     <string name="initial_value">19</string>
     <string name="max_value">20</string>
     <string name="content_description">Content Description</string>
+    <string name="no_connection">No Metro Connection</string>
 </resources>

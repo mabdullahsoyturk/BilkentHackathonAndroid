@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 
 import com.example.bilkent.DataClasses.GameState;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.net.URISyntaxException;
 
 import io.socket.client.IO;
@@ -20,11 +23,13 @@ public class WaitFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener = null;
     private Socket mSocket;
+    private String uniqueID;
+    private String name;
 
     {
         try {
             mSocket = IO.socket("http://104.248.131.83:8080");
-        } catch (URISyntaxException e) {
+        } catch (URISyntaxException ignored) {
         }
     }
 
@@ -32,27 +37,55 @@ public class WaitFragment extends Fragment {
         // Required empty public constructor
     }
 
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if(!mSocket.connected())
-            mSocket.connect();
+        if (getArguments() != null)
+            uniqueID = getArguments().getString("uniqueID");
+        else
+            throw new RuntimeException("You had to give uniqueID in the bundle");
 
-        mSocket.on("connect", new Emitter.Listener() {
+        mSocket.on("general", new Emitter.Listener() {
             @Override
             public void call(Object... args) {
+                JSONObject obj = (JSONObject)args[0];
+                try {
+                    name = obj.getString("name");
+                    mListener.onStateChange(GameState.Game);
+                } catch (JSONException ignore){
 
+                }
             }
         });
+
+        mSocket.on(Socket.EVENT_CONNECT_ERROR, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                mListener.onStateChange(GameState.ConnectionFailed);
+            }
+        });
+
+        mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                mListener.onStateChange(GameState.ConnectionFailed);
+            }
+        });
+
+        mSocket.connect();
     }
 
-    
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mSocket.disconnect();
-        mSocket.off("connect");
+        mSocket.off(Socket.EVENT_CONNECT);
+        mSocket.off(Socket.EVENT_CONNECT_ERROR);
+        mSocket.off(Socket.EVENT_CONNECT_TIMEOUT);
+        mSocket.close();
     }
 
     @Override
@@ -84,12 +117,4 @@ public class WaitFragment extends Fragment {
         void onStateChange(GameState newState);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        mSocket.disconnect();
-        //todo unregister events
-        //mSocket.off()
-    }
 }
