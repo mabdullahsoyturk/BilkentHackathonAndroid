@@ -32,57 +32,39 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
     }
 
+    public void checkIfContains(int number) {
+        if(category_list.contains(number)) {
+            category_list.remove(category_list.indexOf(number));
+        }else {
+            category_list.add(number);
+        }
+    }
+
     public void onClick(View v) {
-
-        System.out.println(v.getId());
-
         switch (v.getId()) {
             case R.id.ib_sport:
-                if(category_list.contains(5)) {
-                    category_list.remove(5);
-                }
-                category_list.add(5);
+                checkIfContains(5);
                 break;
             case R.id.ib_music:
-                if(category_list.contains(7)) {
-                    category_list.remove(7);
-                }
-                category_list.add(7);
+                checkIfContains(7);
                 break;
             case R.id.ib_literature:
-                if(category_list.contains(6)) {
-                    category_list.remove(6);
-                }
-                category_list.add(6);
+                checkIfContains(6);
                 break;
             case R.id.ib_history:
-                if(category_list.contains(2)) {
-                    category_list.remove(2);
-                }
-                category_list.add(2);
+                checkIfContains(2);
+                break;
             case R.id.ib_geography:
-                if(category_list.contains(3)) {
-                    category_list.remove(3);
-                }
-                category_list.add(3);
+                checkIfContains(3);
                 break;
             case R.id.ib_art:
-                if(category_list.contains(4)) {
-                    category_list.remove(4);
-                }
-                category_list.add(4);
+                checkIfContains(4);
                 break;
             case R.id.ib_culture:
-                if(category_list.contains(1)) {
-                    category_list.remove(1);
-                }
-                category_list.add(1);
+                checkIfContains(1);
                 break;
             case R.id.ib_cinema:
-                if(category_list.contains(8)) {
-                    category_list.remove(8);
-                }
-                category_list.add(8);
+                checkIfContains(8);
                 break;
         }
     }
