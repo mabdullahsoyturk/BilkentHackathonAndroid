@@ -19,7 +19,7 @@ import com.example.bilkent.DataClasses.Question;
  * Use the {@link TriviaGameFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TriviaGameFragment extends Fragment {
+/*public class TriviaGameFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_QUESTION = "Question";
 
@@ -84,3 +84,4 @@ public class TriviaGameFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
+*/

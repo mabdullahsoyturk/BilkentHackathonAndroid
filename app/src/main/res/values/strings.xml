@@ -1,21 +1,23 @@
 <resources>
     <string name="app_name">Bilkent</string>
-    <string name="question">Question Placeholder</string>
-    <string name="first_answer">First Answer</string>
-    <string name="second_answer">Second Answer</string>
-    <string name="third_answer">Third Answer</string>
-    <string name="fourth_answer">Fourth Answer</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="question" translatable="true">Question Placeholder</string>
+    <string name="first_answer" translatable="true">First Answer</string>
+    <string name="second_answer" translatable="true">Second Answer</string>
+    <string name="third_answer" translatable="true">Third Answer</string>
+    <string name="fourth_answer" translatable="true">Fourth Answer</string>
+    <string name="hello_blank_fragment" translatable="true">Hello blank fragment</string>
     <string name="initial_value">19</string>
     <string name="max_value">20</string>
-    <string name="content_description">Content Description</string>
-    <string name="no_connection">No Metro Connection</string>
-    <string name="art">Sanat</string>
-    <string name="culture">Kültür</string>
-    <string name="geography">Coğrafya</string>
-    <string name="history">Tarih</string>
-    <string name="literature">Edebiyat</string>
-    <string name="music">Müzik</string>
-    <string name="sport">Spor</string>
-    <string name="cinema">Sinema</string>
+    <string name="content_description" translatable="true">Content Description</string>
+    <string name="no_connection" translatable="true">No Metro Connection</string>
+    <string name="art" translatable="true">Art</string>
+    <string name="culture" translatable="true">Culture</string>
+    <string name="geography" translatable="true">Geography</string>
+    <string name="history" translatable="true">History</string>
+    <string name="literature" translatable="true">Literature</string>
+    <string name="music" translatable="true">Music</string>
+    <string name="sport" translatable="true">Sports</string>
+    <string name="cinema" translatable="true">Cinema</string>
+    <string name="connect" translatable="true">Connect</string>
+    <string name="connect_waiting" translatable="true">Connect…</string>
 </resources>

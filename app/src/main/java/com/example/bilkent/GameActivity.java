@@ -1,58 +1,39 @@
 package com.example.bilkent;
 
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
-import com.example.bilkent.DataClasses.GameState;
+import java.net.URISyntaxException;
 
-public class GameActivity extends AppCompatActivity
-        implements WaitFragment.OnFragmentInteractionListener,
-        TriviaGameFragment.OnFragmentInteractionListener {
+import io.socket.client.IO;
+import io.socket.client.Socket;
 
-    @Override
-    public void onStateChange(GameState newState) {
-        FragmentManager manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.remove(waitFragment);
-        if (newState == GameState.ConnectionFailed) {
-            transaction.add(R.id.container, connectionFailedFragment);
-        } else if (newState == GameState.Game) {
-            transaction.add(R.id.container, triviaGameFragment);
-        }
-        transaction.commit();
-    }
 
-    GameState mGameState;
-    FragmentTransaction transaction;
-    TriviaGameFragment triviaGameFragment;
-    WaitFragment waitFragment;
-    ConnectionFailedFragment connectionFailedFragment;
-    GameState gameState;
+public class GameActivity extends AppCompatActivity {
+
+    Socket mSocket;
     String uniqueID;
+
+    {
+        try{
+            mSocket = IO.socket("http://104.248.131.83:8080/quiz");
+        } catch (URISyntaxException ignore) {
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         uniqueID = IDUtil.id(this);
-        mGameState = GameState.ConnectionTrying;
-        connectionFailedFragment = new ConnectionFailedFragment();
-        waitFragment = new WaitFragment();
-        Bundle arguments = new Bundle();
-        arguments.putString("uniqueID", uniqueID);
-        waitFragment.setArguments(arguments);
-        triviaGameFragment = new TriviaGameFragment();
-        FragmentManager manager = getSupportFragmentManager();
-        transaction = manager.beginTransaction();
-        transaction.replace(R.id.container, waitFragment);
-        transaction.commit();
-    }
+        findViewById(R.id.pb_wait_connect).setVisibility(View.VISIBLE);
+        findViewById(R.id.fl_main).setVisibility(View.INVISIBLE);
+        String message = getIntent().getStringExtra("categories");
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
+
 
     }
+
 }

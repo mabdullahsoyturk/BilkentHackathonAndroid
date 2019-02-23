@@ -1,70 +1,104 @@
 package com.example.bilkent;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.Button;
+import android.widget.TextView;
 
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<Integer> category_list = new ArrayList<>();
-
-    ImageButton ib_sport, ib_music, ib_literature, ib_history, ib_geography, ib_art, ib_culture, ib_cinema;
+    boolean[] categoryArray = new boolean[8];
+    TextView tvSport, tvMusic, tvLiterature, tvHistory, tvGeography, tvArt, tvCulture, tvCinema;
+    boolean editable = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ib_sport = findViewById(R.id.ib_sport);
-        ib_music = findViewById(R.id.ib_music);
-        ib_literature = findViewById(R.id.ib_literature);
-        ib_history = findViewById(R.id.ib_history);
-        ib_geography = findViewById(R.id.ib_geography);
-        ib_art = findViewById(R.id.ib_art);
-        ib_culture = findViewById(R.id.ib_culture);
-        ib_cinema = findViewById(R.id.ib_cinema);
 
-//        Intent intent = new Intent(this, GameActivity.class);
-//        startActivity(intent);
+        tvSport = findViewById(R.id.tv_sport);
+        tvMusic = findViewById(R.id.tv_music);
+        tvLiterature = findViewById(R.id.tv_literature);
+        tvHistory = findViewById(R.id.tv_history);
+        tvGeography = findViewById(R.id.tv_geography);
+        tvArt = findViewById(R.id.tv_art);
+        tvCulture = findViewById(R.id.tv_culture);
+        tvCinema = findViewById(R.id.tv_cinema);
+
+
     }
 
-    public void checkIfContains(int number) {
-        if (category_list.contains(number)) {
-            category_list.remove(category_list.indexOf(number));
-        } else {
-            category_list.add(number);
-        }
-
+    public boolean revert(int number) {
+        categoryArray[number - 1] = !categoryArray[number - 1];
+        return categoryArray[number - 1];
     }
 
     public void onClick(View v) {
+        if (!editable) return;
         switch (v.getId()) {
             case R.id.ib_sport:
-                checkIfContains(5);
+            case R.id.ly_sport:
+                tvSport.setText(getString(R.string.sport) + (revert(5) ? " X" : ""));
                 break;
+
+            case R.id.ly_music:
             case R.id.ib_music:
-                checkIfContains(7);
+                tvMusic.setText(getString(R.string.music) + (revert(7) ? " X" : ""));
                 break;
+
+            case R.id.ly_literature:
             case R.id.ib_literature:
-                checkIfContains(6);
+                tvLiterature.setText(getString(R.string.literature) + (revert(6) ? " X" : ""));
                 break;
+
+            case R.id.ly_history:
             case R.id.ib_history:
-                checkIfContains(2);
+                tvHistory.setText(getString(R.string.history) + (revert(2) ? " X" : ""));
                 break;
+
+            case R.id.ly_geography:
             case R.id.ib_geography:
-                checkIfContains(3);
+                tvGeography.setText(getString(R.string.geography) + (revert(3) ? "X" : ""));
                 break;
+
+            case R.id.ly_art:
             case R.id.ib_art:
-                checkIfContains(4);
+                tvArt.setText(getString(R.string.art) + (revert(4) ? " X" : ""));
                 break;
+
+            case R.id.ly_culture:
             case R.id.ib_culture:
-                checkIfContains(1);
+                tvCulture.setText(getString(R.string.culture) + (revert(1) ? " X" : ""));
                 break;
+
+            case R.id.ly_cinema:
             case R.id.ib_cinema:
-                checkIfContains(8);
+                tvCinema.setText(getString(R.string.cinema) + (revert(8) ? " X" : ""));
+
                 break;
         }
+    }
+
+    public void onConnectClicked(View view) {
+        findViewById(R.id.btn_connect).setEnabled(false);
+        ((Button) findViewById(R.id.btn_connect)).setText(R.string.connect_waiting);
+        editable = false;
+
+        StringBuilder categories = new StringBuilder();
+        categories.append("[");
+        for (int i = 0; i < categoryArray.length; i++)
+            if (categoryArray[i]) categories.append(i).append(",");
+
+        if (categories.length() > 0) categories.deleteCharAt(categories.length() - 1);
+        categories.append("]");
+
+        String message = categories.toString();
+
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("categories", message);
+        startActivity(intent);
     }
 }
