@@ -8,34 +8,30 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class GameActivity extends AppCompatActivity implements TriviaGameFragment.OnFragmentInteractionListener {
+import com.example.bilkent.DataClasses.GameState;
 
-    Button btn;
+public class GameActivity extends AppCompatActivity implements WaitFragment.OnFragmentInteractionListener {
+
+    @Override
+    public void onStateChange(GameState newState) {
+
+    }
+
+    GameState mGameState;
     FragmentTransaction transaction;
-
+    TriviaGameFragment triviaGameFragment;
+    WaitFragment waitFragment;
+    GameState gameState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
-        btn = findViewById(R.id.btn_tmp);
-        final TriviaGameFragment fragment = new TriviaGameFragment();
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager manager = getSupportFragmentManager();
-                transaction = manager.beginTransaction();
-                transaction.replace(android.R.id.content, fragment, "Hello");
-                transaction.commit();
-            }
-        });
-
-
+        mGameState = GameState.ConnectionTrying;
+        waitFragment = new WaitFragment();
+        FragmentManager manager = getSupportFragmentManager();
+        transaction = manager.beginTransaction();
+        transaction.replace(android.R.id.content, waitFragment, "Hello");
+        transaction.commit();
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
-    }
 }

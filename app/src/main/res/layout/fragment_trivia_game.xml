@@ -6,10 +6,170 @@
     tools:context=".TriviaGameFragment"
     android:id="@+id/fragment_trivia_game">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context=".QuestionActivity">
+
+        <ImageView
+            android:id="@+id/iv_first"
+            android:layout_width="33dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/checkmark"
+            android:contentDescription="@string/content_description"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_first_answer"
+            app:layout_constraintEnd_toEndOf="@+id/btn_first_answer"
+            app:layout_constraintTop_toTopOf="@+id/btn_first_answer"
+            app:layout_constraintVertical_bias="0.45" />
+
+        <ImageView
+            android:id="@+id/iv_second"
+            android:layout_width="33dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/content_description"
+            android:src="@drawable/checkmark"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_second_answer"
+            app:layout_constraintEnd_toEndOf="@+id/btn_second_answer"
+            app:layout_constraintTop_toTopOf="@+id/btn_second_answer" />
+
+        <ImageView
+            android:id="@+id/iv_third"
+            android:layout_width="33dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/checkmark"
+            android:contentDescription="@string/content_description"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_third_answer"
+            app:layout_constraintEnd_toEndOf="@+id/btn_third_answer"
+            app:layout_constraintTop_toTopOf="@+id/btn_third_answer" />
+
+        <ImageView
+            android:id="@+id/iv_fourth"
+            android:layout_width="33dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/checkmark"
+            android:contentDescription="@string/content_description"
+            app:layout_constraintBottom_toBottomOf="@+id/btn_fourth_answer"
+            app:layout_constraintEnd_toEndOf="@+id/btn_fourth_answer"
+            app:layout_constraintTop_toTopOf="@+id/btn_fourth_answer" />
+
+        <ProgressBar
+            android:id="@+id/progressBarToday"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="8dp"
+            android:indeterminate="false"
+            android:max="20"
+            android:progress="19"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_question"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:text="@string/question"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.377" />
+
+        <Button
+            android:id="@+id/btn_first_answer"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/colorRed"
+            android:text="@string/first_answer"
+            android:textColor="@color/textColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.561" />
+
+        <Button
+            android:id="@+id/btn_second_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/colorBlue"
+            android:text="@string/second_answer"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_first_answer" />
+
+        <Button
+            android:id="@+id/btn_third_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/colorOrange"
+            android:text="@string/third_answer"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_second_answer" />
+
+        <Button
+            android:id="@+id/btn_fourth_answer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:background="@color/colorGreen"
+            android:text="@string/fourth_answer"
+            android:textColor="@color/textColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_third_answer" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:gravity="center"
+            android:text="@string/initial_value"
+            android:textSize="36sp"
+            app:layout_constraintBottom_toBottomOf="@+id/progressBarToday"
+            app:layout_constraintEnd_toEndOf="@+id/progressBarToday"
+            app:layout_constraintStart_toStartOf="@+id/progressBarToday"
+            app:layout_constraintTop_toTopOf="@+id/progressBarToday"
+            app:layout_constraintVertical_bias="0.52" />
+
+    </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>
