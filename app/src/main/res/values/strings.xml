@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Bilkent</string>
+    <string name="question">Question</string>
 </resources>
