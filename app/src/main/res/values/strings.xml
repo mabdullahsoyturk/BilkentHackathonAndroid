@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Bilkent</string>
     <string name="question">Question</string>
+    <string name="first_answer">First Answer</string>
+    <string name="second_answer">Second Answer</string>
+    <string name="third_answer">Third Answer</string>
+    <string name="fourth_answer">Fourth Answer</string>
 </resources>
