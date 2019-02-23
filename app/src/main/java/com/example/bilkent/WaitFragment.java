@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
+import io.socket.emitter.Emitter;
 
 public class WaitFragment extends Fragment {
 
@@ -30,13 +31,20 @@ public class WaitFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         try {
-            mSocket = IO.socket("http://104.248.131.83");
+            mSocket = IO.socket("http://104.248.131.83:8080");
         } catch (URISyntaxException e) {
             mListener.onStateChange(GameState.ConnectionFailed);
             return;
         }
         if(!mSocket.connected())
             mSocket.connect();
+
+        mSocket.on("connect", new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+                System.out.println("connected");
+            }
+        });
     }
 
     @Override
