@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_sport"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -32,6 +33,7 @@
             android:src="@drawable/sport" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_sport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,6 +59,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_music"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -68,6 +71,7 @@
             android:src="@drawable/music" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_music"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -93,6 +97,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_sport">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_literature"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -104,6 +109,7 @@
             android:src="@drawable/literature" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_literature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -129,6 +135,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_music">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_history"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -140,6 +147,7 @@
             android:src="@drawable/history" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -165,6 +173,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_literature">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_geography"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -176,6 +185,7 @@
             android:src="@drawable/geography" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_geography"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -201,6 +211,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_history">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_art"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -212,6 +223,7 @@
             android:src="@drawable/art" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_art"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -237,6 +249,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_geography">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_culture"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -248,6 +261,7 @@
             android:src="@drawable/culture" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_culture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -273,6 +287,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ly_art">
 
         <ImageButton
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/ib_cinema"
             android:layout_width="75dp"
             android:layout_height="75dp"
@@ -284,6 +299,7 @@
             android:src="@drawable/cinema" />
 
         <TextView
+            android:stateListAnimator="@drawable/animate_scale"
             android:id="@+id/tv_cinema"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
