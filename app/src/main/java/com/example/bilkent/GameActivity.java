@@ -274,12 +274,7 @@ public class GameActivity extends AppCompatActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("choice", choice);
 
-        mSocket.emit("move", jsonObject, new Emitter.Listener() {
-            @Override
-            public void call(Object... args) {
-
-            }
-        });
+        mSocket.emit("move", jsonObject);
     }
 
 }
