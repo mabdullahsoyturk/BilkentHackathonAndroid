@@ -1,36 +1,24 @@
 package com.example.bilkent;
 
 import android.animation.ObjectAnimator;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.bilkent.DataClasses.UserResult;
-import com.example.bilkent.DataClasses.UsersChoice;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.URISyntaxException;
-
-import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-import 	android.view.animation.DecelerateInterpolator;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -53,22 +41,22 @@ public class GameActivity extends AppCompatActivity {
     ObjectAnimator progressBarAnimation;
     TextView tv_number_of_answers;
 
-    private void enableButton(Button btn){
+    private void enableButton(Button btn) {
         btn.setEnabled(true);
         btn.setAlpha(1);
     }
 
-    private void disableButton(Button btn){
+    private void disableButton(Button btn) {
         btn.setEnabled(false);
         btn.setAlpha((float) 0.5);
     }
-    private void setProgressAnimate(ProgressBar pb, int progressTo)
-    {
-        if(progressBarAnimation != null){
+
+    private void setProgressAnimate(ProgressBar pb, int progressTo) {
+        if (progressBarAnimation != null) {
             progressBarAnimation.cancel();
         }
 
-        ObjectAnimator progressBarAnimation = ObjectAnimator.ofInt(pb, "progress", pb.getProgress(), progressTo*100 );
+        ObjectAnimator progressBarAnimation = ObjectAnimator.ofInt(pb, "progress", pb.getProgress(), progressTo * 100);
         progressBarAnimation.setDuration(1200);
         progressBarAnimation.setInterpolator(new DecelerateInterpolator());
         progressBarAnimation.start();
@@ -149,7 +137,7 @@ public class GameActivity extends AppCompatActivity {
                     GameActivity.this.result = result;
                     GameActivity.this.ads = ads;
                     ProgressBar progressBar = findViewById(R.id.progressBarToday);
-                    progressBar.setMax(play*100);
+                    progressBar.setMax(play * 100);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -175,7 +163,7 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             ((TextView) findViewById(R.id.tv_question)).setText(text);
-                            for(int i = 0; i < buttons.length; i++){
+                            for (int i = 0; i < buttons.length; i++) {
                                 ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
                                 params.width = button_width;
                                 buttons[i].setLayoutParams(params);
@@ -210,7 +198,7 @@ public class GameActivity extends AppCompatActivity {
                         public void run() {
                             setProgressAnimate((ProgressBar) findViewById(R.id.progressBarToday), timeLeft);
 
-                            tv_number_of_answers.setText(Integer.toString(number_of_answers));
+                            tv_number_of_answers.setText(String.valueOf(number_of_answers));
                             ((ProgressBar) findViewById(R.id.progressBarToday))
                                     .setProgress(timeLeft);
 
@@ -218,19 +206,16 @@ public class GameActivity extends AppCompatActivity {
                                     setText(String.valueOf(timeLeft));
                             if (timeLeft == 0) {
                                 Log.i("True Answer is ", "" + trueAnswerIndex);
-                                for(int i = 0; i < buttons.length; i++) {
-                                    if(trueAnswerIndex == i){
+                                for (int i = 0; i < buttons.length; i++) {
+                                    if (trueAnswerIndex == i) {
                                         buttons[i].setAlpha(1);
                                         imageViews[i].setElevation(10);
-                                    } else{
+                                    } else {
                                         buttons[i].setAlpha((float) 0.5);
                                         imageViews[i].setElevation(0);
                                     }
                                 }
-
                             }
-
-
                         }
                     });
                 } catch (JSONException e) {
@@ -251,23 +236,24 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                for(int i = 0; i < buttons.length; i++) {
+                                for (int i = 0; i < buttons.length; i++) {
                                     ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
                                     double weight = summary.getDouble(i);
 
-                                    if(weight < 0.05)
+                                    if (weight < 0.05)
                                         weight = 0.1;
-                                    params.width = (int)(buttons[i].getWidth() * weight);
+                                    params.width = (int) (buttons[i].getWidth() * weight);
 
-                                    buttons[i].setText("%" + ((int)(summary.getDouble(i)*100)));
+                                    buttons[i].setText("%" + ((int) (summary.getDouble(i) * 100)));
                                     buttons[i].setLayoutParams(params);
 
                                 }
 
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 Log.i("LAN", "HEYHEY");
                             }
-                            }});
+                        }
+                    });
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -281,8 +267,6 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void gameOnClick(View view) throws JSONException {
-        System.out.println("works");
-
         switch (view.getId()) {
             case R.id.btn_first_answer:
                 choice = 0;
@@ -309,8 +293,9 @@ public class GameActivity extends AppCompatActivity {
                 buttons[0].setAlpha((float) 0.5);
                 break;
         }
-        for(int i = 0; i < buttons.length; i++){
-            buttons[i].setEnabled(false);
+
+        for (Button button : buttons) {
+            button.setEnabled(false);
         }
 
         System.out.println(choice);
