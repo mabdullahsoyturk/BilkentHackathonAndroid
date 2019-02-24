@@ -26,4 +26,5 @@
     <string name="you">Sen</string>
     <string name="description_answers">Cevaplayan</string>
     <string name="description_ranking">Sıralamanız</string>
+    <string name="chess">Satranç</string>
 </resources>

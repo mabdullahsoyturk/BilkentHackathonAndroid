@@ -28,4 +28,8 @@
     <string name="description_answers"># answerer</string>
     <string name="description_ranking">Your Ranking</string>
     <string name="zeros" translatable="false">0000</string>
+    <string name="ping_pong" translatable="false">Ping - Pong</string>
+    <string name="chess">Chess</string>
+    <string name="networking" translatable="false">Networking</string>
+    <string name="quiz" translatable="false">Quiz Oyunu</string>
 </resources>
