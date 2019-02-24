@@ -31,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     int choice = -1;
     int number_of_answers = 0;
     int button_width;
+    String username = "Bilkent";
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
@@ -125,11 +126,13 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 try {
                     JSONObject jsonObject = (JSONObject) args[0];
+                    username = jsonObject.getString("name");
                     jsonObject = jsonObject.getJSONObject("stateDurations");
                     int idle = jsonObject.getInt("Idle");
                     int play = jsonObject.getInt("Play");
                     int result = jsonObject.getInt("Result");
                     int ads = jsonObject.getInt("Ads");
+
                     GameActivity.this.idle = idle;
                     GameActivity.this.play = play;
                     GameActivity.this.result = result;
@@ -160,6 +163,7 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            setTitle(username);
                             ((TextView) findViewById(R.id.tv_question)).setText(text);
                             for (int i = 0; i < buttons.length; i++) {
                                 ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
