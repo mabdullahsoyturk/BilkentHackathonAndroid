@@ -1,18 +1,17 @@
 package com.example.bilkent;
 
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 
 public class MainActivity extends AppCompatActivity {
 
     boolean[] categoryArray = new boolean[8];
-    TextView tvSport, tvMusic, tvLiterature, tvHistory, tvGeography, tvArt, tvCulture, tvCinema;
+    LinearLayout lySport, lyMusic, lyLiterature, lyHistory, lyGeography, lyArt, lyCulture, lyCinema;
     boolean editable = true;
 
     @Override
@@ -20,14 +19,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvSport = findViewById(R.id.tv_sport);
-        tvMusic = findViewById(R.id.tv_music);
-        tvLiterature = findViewById(R.id.tv_literature);
-        tvHistory = findViewById(R.id.tv_history);
-        tvGeography = findViewById(R.id.tv_geography);
-        tvArt = findViewById(R.id.tv_art);
-        tvCulture = findViewById(R.id.tv_culture);
-        tvCinema = findViewById(R.id.tv_cinema);
+        lySport = findViewById(R.id.ly_sport);
+        lyMusic = findViewById(R.id.ly_music);
+        lyLiterature = findViewById(R.id.ly_literature);
+        lyHistory = findViewById(R.id.ly_history);
+        lyGeography = findViewById(R.id.ly_geography);
+        lyArt = findViewById(R.id.ly_art);
+        lyCulture = findViewById(R.id.ly_culture);
+        lyCinema = findViewById(R.id.ly_cinema);
     }
 
     public boolean revert(int number) {
@@ -38,50 +37,77 @@ public class MainActivity extends AppCompatActivity {
     public void onClick(View v) {
         if (!editable) return;
 
-        GradientDrawable border = new GradientDrawable();
-        border.setColor(0xFFFFFFFF); //white background
-        border.setStroke(1, 0xFF000000); //black border with full opacity
-
         switch (v.getId()) {
             case R.id.ib_sport:
             case R.id.ly_sport:
-                tvSport.setText(getString(R.string.sport) + (revert(5) ? " X" : ""));
+                if(lySport.getAlpha() == 1) {
+                    lySport.setAlpha((float)0.5);
+                }else {
+                    lySport.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_music:
             case R.id.ib_music:
-                tvMusic.setText(getString(R.string.music) + (revert(7) ? " X" : ""));
+                if(lyMusic.getAlpha() == 1) {
+                    lyMusic.setAlpha((float)0.5);
+                }else {
+                    lyMusic.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_literature:
             case R.id.ib_literature:
-                tvLiterature.setText(getString(R.string.literature) + (revert(6) ? " X" : ""));
+                if(lyLiterature.getAlpha() == 1) {
+                    lyLiterature.setAlpha((float)0.5);
+                }else {
+                    lyLiterature.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_history:
             case R.id.ib_history:
-                tvHistory.setText(getString(R.string.history) + (revert(2) ? " X" : ""));
+                if(lyHistory.getAlpha() == 1) {
+                    lyHistory.setAlpha((float)0.5);
+                }else {
+                    lyHistory.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_geography:
             case R.id.ib_geography:
-                tvGeography.setText(getString(R.string.geography) + (revert(3) ? " X" : ""));
+                if(lyGeography.getAlpha() == 1) {
+                    lyGeography.setAlpha((float)0.5);
+                }else {
+                    lyGeography.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_art:
             case R.id.ib_art:
-                tvArt.setText(getString(R.string.art) + (revert(4) ? " X" : ""));
+                if(lyArt.getAlpha() == 1) {
+                    lyArt.setAlpha((float)0.5);
+                }else {
+                    lyArt.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_culture:
             case R.id.ib_culture:
-                tvCulture.setText(getString(R.string.culture) + (revert(1) ? " X" : ""));
+                if(lyCulture.getAlpha() == 1) {
+                    lyCulture.setAlpha((float)0.5);
+                }else {
+                    lyCulture.setAlpha(1);
+                }
                 break;
 
             case R.id.ly_cinema:
             case R.id.ib_cinema:
-                tvCinema.setText(getString(R.string.cinema) + (revert(8) ? " X" : ""));
-
+                if(lyCinema.getAlpha() == 1) {
+                    lyCinema.setAlpha((float)0.5);
+                }else {
+                    lyCinema.setAlpha(1);
+                }
                 break;
         }
     }

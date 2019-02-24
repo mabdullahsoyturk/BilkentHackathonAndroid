@@ -1,6 +1,14 @@
 package com.example.bilkent;
 
 import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,6 +47,7 @@ public class GameActivity extends AppCompatActivity {
     ImageView[] imageViews;
 
     ObjectAnimator progressBarAnimation;
+    ValueAnimator[] anims;
     TextView tv_number_of_answers;
 
     private void enableButton(Button btn) {
@@ -77,6 +86,7 @@ public class GameActivity extends AppCompatActivity {
         buttons[1] = findViewById(R.id.btn_second_answer);
         buttons[2] = findViewById(R.id.btn_third_answer);
         buttons[3] = findViewById(R.id.btn_fourth_answer);
+        anims = new ValueAnimator[4];
 
         button_width = buttons[0].getWidth();
 
@@ -230,22 +240,43 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 JSONObject object = (JSONObject) args[0];
                 try {
-                    String scoreboardStr = object.getJSONArray("scoreboard").toString();
+                    final JSONArray scoreboard = object.getJSONArray("scoreboard");
+
                     final JSONArray summary = object.getJSONArray("summary");
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             try {
-                                for (int i = 0; i < buttons.length; i++) {
-                                    ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
-                                    double weight = summary.getDouble(i);
+                                for(int i = 0; i < buttons.length; i++) {
+                                    final int j = i;
 
-                                    if (weight < 0.05)
-                                        weight = 0.1;
-                                    params.width = (int) (buttons[i].getWidth() * weight);
+                                    double weight = summary.getDouble(j);
+                                    if(weight < 0.33)
+                                        weight = 0.33;
+                                    else if(weight < 0.7)
+                                        weight+=0.1;
 
-                                    buttons[i].setText("%" + ((int) (summary.getDouble(i) * 100)));
-                                    buttons[i].setLayoutParams(params);
+                                    buttons[j].setText("%" + ((int)(summary.getDouble(j)*100)));
+
+                                    if(anims[j] != null){
+                                        anims[j].cancel();
+                                    }
+                                    anims[j] = ValueAnimator.ofInt(buttons[j].getMeasuredWidth(), (int) (buttons[j].getMeasuredWidth() * weight));
+
+                                    anims[j].addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+                                        @Override
+                                        public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                                            int val = (Integer) valueAnimator.getAnimatedValue();
+                                            ViewGroup.LayoutParams layoutParams = buttons[j].getLayoutParams();
+                                            layoutParams.width = val;
+                                            buttons[j].setLayoutParams(layoutParams);
+                                        }
+                                    });
+
+                                    anims[j].setDuration(500);
+                                    anims[j].start();
 
                                 }
 
@@ -254,6 +285,7 @@ public class GameActivity extends AppCompatActivity {
                             }
                         }
                     });
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
