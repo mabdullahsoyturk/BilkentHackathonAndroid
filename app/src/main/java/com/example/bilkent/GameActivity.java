@@ -1,5 +1,6 @@
 package com.example.bilkent;
 
+import android.animation.ObjectAnimator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ import java.net.URISyntaxException;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-
+import 	android.view.animation.DecelerateInterpolator;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -41,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
     FrameLayout mainLayout;
     Button btnFirstAnswer, btnSecondAnswer, btnThirdAnswer, btnFourthAnswer;
     ImageView ivFirst, ivSecond, ivThird, ivFourth;
+    ObjectAnimator progressBarAnimation;
 
     private void enableButton(Button btn){
         btn.setEnabled(true);
@@ -51,11 +53,23 @@ public class GameActivity extends AppCompatActivity {
         btn.setEnabled(false);
         btn.setAlpha((float) 0.5);
     }
+    private void setProgressAnimate(ProgressBar pb, int progressTo)
+    {
+        if(progressBarAnimation != null){
+            progressBarAnimation.cancel();
+        }
+
+        ObjectAnimator progressBarAnimation = ObjectAnimator.ofInt(pb, "progress", pb.getProgress(), progressTo*100 );
+        progressBarAnimation.setDuration(1200);
+        progressBarAnimation.setInterpolator(new DecelerateInterpolator());
+        progressBarAnimation.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
         uniqueID = IDUtil.id(this);
         (pbWait = findViewById(R.id.pb_wait_connect)).setVisibility(View.VISIBLE);
         (mainLayout = findViewById(R.id.fl_main)).setVisibility(View.INVISIBLE);
@@ -119,7 +133,7 @@ public class GameActivity extends AppCompatActivity {
                     GameActivity.this.result = result;
                     GameActivity.this.ads = ads;
                     ProgressBar progressBar = findViewById(R.id.progressBarToday);
-                    progressBar.setMax(play);
+                    progressBar.setMax(play*100);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,8 +193,8 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ((ProgressBar) findViewById(R.id.progressBarToday))
-                                    .setProgress(timeLeft);
+                            setProgressAnimate((ProgressBar) findViewById(R.id.progressBarToday), timeLeft);
+
                             ((TextView) findViewById(R.id.tv_remaining_time)).
                                     setText(String.valueOf(timeLeft));
                             if (timeLeft == 0) {
