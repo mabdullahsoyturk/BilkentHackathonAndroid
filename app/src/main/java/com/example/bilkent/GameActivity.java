@@ -60,14 +60,22 @@ public class GameActivity extends AppCompatActivity {
         btnFourthAnswer = findViewById(R.id.btn_fourth_answer);
 
 
-        final String message = getIntent().getStringExtra("categories");
+        final int[] categories = getIntent().getIntArrayExtra("categories");
+        final JSONObject object = new JSONObject();
+        try {
+            object.put("phoneId", IDUtil.id(this));
+            JSONArray array = new JSONArray();
+            for (int i = 0; i < categories.length; i++) array.put(i, categories[i]);
+            object.put("categories", array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                mSocket.emit("login",
-                        String.format("{phoneId:'%s',  categories:%s}",
-                                IDUtil.id(GameActivity.this), message));
+                mSocket.emit("login", object);
             }
         });
 

@@ -87,18 +87,21 @@ public class MainActivity extends AppCompatActivity {
         ((Button) findViewById(R.id.btn_connect)).setText(R.string.connect_waiting);
         editable = false;
 
-        StringBuilder categories = new StringBuilder();
-        categories.append("[");
-        for (int i = 0; i < categoryArray.length; i++)
-            if (categoryArray[i]) categories.append(i).append(",");
+        int count = 0;
+        for (boolean aCategoryArray : categoryArray) {
+            if (aCategoryArray) count++;
+        }
 
-        if (categories.length() > 0) categories.deleteCharAt(categories.length() - 1);
-        categories.append("]");
+        int[] arr = new int[count];
 
-        String message = categories.toString();
-
+        for(int i = 0; i < categoryArray.length; i++){
+            if(categoryArray[i]){
+                arr[count - 1] = i + 1;
+                count --;
+            }
+        }
         Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("categories", message);
+        intent.putExtra("categories", arr);
         startActivity(intent);
     }
 }
