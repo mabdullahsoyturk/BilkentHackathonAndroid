@@ -24,4 +24,7 @@
     <string name="username">Username</string>
     <string name="score">Score</string>
     <string name="you">You</string>
+    <string name="question_mark" translatable="false">"?"</string>
+    <string name="description_answers"># answerer</string>
+    <string name="description_ranking">Your Ranking</string>
 </resources>
