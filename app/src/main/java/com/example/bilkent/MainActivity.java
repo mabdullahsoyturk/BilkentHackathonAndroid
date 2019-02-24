@@ -1,10 +1,13 @@
 package com.example.bilkent;
 
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
@@ -27,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         tvArt = findViewById(R.id.tv_art);
         tvCulture = findViewById(R.id.tv_culture);
         tvCinema = findViewById(R.id.tv_cinema);
-
-
     }
 
     public boolean revert(int number) {
@@ -38,6 +39,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         if (!editable) return;
+
+        GradientDrawable border = new GradientDrawable();
+        border.setColor(0xFFFFFFFF); //white background
+        border.setStroke(1, 0xFF000000); //black border with full opacity
+
         switch (v.getId()) {
             case R.id.ib_sport:
             case R.id.ly_sport:
@@ -61,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.ly_geography:
             case R.id.ib_geography:
-                tvGeography.setText(getString(R.string.geography) + (revert(3) ? "X" : ""));
+                tvGeography.setText(getString(R.string.geography) + (revert(3) ? " X" : ""));
                 break;
 
             case R.id.ly_art:

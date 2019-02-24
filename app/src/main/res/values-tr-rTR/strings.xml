@@ -13,7 +13,7 @@
     <string name="no_connection" translatable="true">Metro Bağlantısı Yok</string>
     <string name="art" translatable="true">Sanat</string>
     <string name="culture" translatable="true">Kültür</string>
-    <string name="geography" translatable="true">Çoğrafya</string>
+    <string name="geography" translatable="true">Coğrafya</string>
     <string name="history" translatable="true">Tarih</string>
     <string name="literature" translatable="true">Edebiyat</string>
     <string name="music" translatable="true">Müzik</string>
