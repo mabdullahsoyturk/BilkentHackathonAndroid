@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/cardview_light_background"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container">
@@ -81,6 +82,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:fontFamily="monospace"
                 android:id="@+id/tv_question"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,14 +90,13 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:text="@string/question"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progressBarToday" />
-
 
             <Button
                 android:id="@+id/btn_first_answer"
@@ -104,7 +105,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorRed"
+                android:background="@drawable/music_shape"
                 android:onClick="gameOnClick"
                 android:text="@string/first_answer"
                 android:textColor="@color/textColor"
@@ -120,7 +121,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorBlue"
+                android:background="@drawable/cinema_shape"
                 android:onClick="gameOnClick"
                 android:text="@string/second_answer"
                 android:textColor="@color/textColor"
@@ -136,7 +137,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorOrange"
+                android:background="@drawable/culture_shape"
                 android:onClick="gameOnClick"
                 android:text="@string/third_answer"
                 android:textColor="@color/textColor"
@@ -152,7 +153,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorGreen"
+                android:background="@drawable/history_shape"
                 android:onClick="gameOnClick"
                 android:text="@string/fourth_answer"
                 android:textColor="@color/textColor"
