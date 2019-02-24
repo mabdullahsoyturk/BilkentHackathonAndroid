@@ -1,9 +1,17 @@
 package com.example.bilkent;
 
+import android.animation.ObjectAnimator;
+import android.graphics.Bitmap;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -12,7 +20,6 @@ import android.widget.TextView;
 
 import com.example.bilkent.DataClasses.UserResult;
 import com.example.bilkent.DataClasses.UsersChoice;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,12 +30,11 @@ import java.net.URISyntaxException;
 import io.socket.client.IO;
 import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
-
+import 	android.view.animation.DecelerateInterpolator;
 
 public class GameActivity extends AppCompatActivity {
 
     Socket mSocket;
-    Gson gson;
     String uniqueID;
     int timeLeft;
     int play, idle, ads, result;
@@ -38,8 +44,12 @@ public class GameActivity extends AppCompatActivity {
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
-    Button btnFirstAnswer, btnSecondAnswer, btnThirdAnswer, btnFourthAnswer;
+    Button[] buttons;
+
     ImageView ivFirst, ivSecond, ivThird, ivFourth;
+    ImageView[] imageViews;
+
+    ObjectAnimator progressBarAnimation;
     TextView tv_number_of_answers;
 
     private void enableButton(Button btn){
@@ -51,6 +61,17 @@ public class GameActivity extends AppCompatActivity {
         btn.setEnabled(false);
         btn.setAlpha((float) 0.5);
     }
+    private void setProgressAnimate(ProgressBar pb, int progressTo)
+    {
+        if(progressBarAnimation != null){
+            progressBarAnimation.cancel();
+        }
+
+        ObjectAnimator progressBarAnimation = ObjectAnimator.ofInt(pb, "progress", pb.getProgress(), progressTo*100 );
+        progressBarAnimation.setDuration(1200);
+        progressBarAnimation.setInterpolator(new DecelerateInterpolator());
+        progressBarAnimation.start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,20 +79,21 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         mSocket = SocketSingleton.getSocket();
-        gson = new Gson();
 
         uniqueID = IDUtil.id(this);
         (pbWait = findViewById(R.id.pb_wait_connect)).setVisibility(View.VISIBLE);
         (mainLayout = findViewById(R.id.fl_main)).setVisibility(View.INVISIBLE);
-        btnFirstAnswer = findViewById(R.id.btn_first_answer);
-        btnSecondAnswer = findViewById(R.id.btn_second_answer);
-        btnThirdAnswer = findViewById(R.id.btn_third_answer);
-        btnFourthAnswer = findViewById(R.id.btn_fourth_answer);
+        buttons = new Button[4];
+        buttons[0] = findViewById(R.id.btn_first_answer);
+        buttons[1] = findViewById(R.id.btn_second_answer);
+        buttons[2] = findViewById(R.id.btn_third_answer);
+        buttons[3] = findViewById(R.id.btn_fourth_answer);
 
-        ivFirst = findViewById(R.id.iv_first);
-        ivSecond = findViewById(R.id.iv_second);
-        ivThird = findViewById(R.id.iv_third);
-        ivFourth = findViewById(R.id.iv_fourth);
+        imageViews = new ImageView[4];
+        imageViews[0] = findViewById(R.id.iv_first);
+        imageViews[1] = findViewById(R.id.iv_second);
+        imageViews[2] = findViewById(R.id.iv_third);
+        imageViews[3] = findViewById(R.id.iv_fourth);
 
         tv_number_of_answers = findViewById(R.id.tv_number_of_answers);
 
@@ -85,7 +107,6 @@ public class GameActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
         mSocket.on(Socket.EVENT_CONNECT, new Emitter.Listener() {
             @Override
@@ -125,7 +146,7 @@ public class GameActivity extends AppCompatActivity {
                     GameActivity.this.result = result;
                     GameActivity.this.ads = ads;
                     ProgressBar progressBar = findViewById(R.id.progressBarToday);
-                    progressBar.setMax(play);
+                    progressBar.setMax(play*100);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -151,20 +172,17 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             ((TextView) findViewById(R.id.tv_question)).setText(text);
-                            btnFirstAnswer.setText(choices[0]);
-                            btnSecondAnswer.setText(choices[1]);
-                            btnThirdAnswer.setText(choices[2]);
-                            btnFourthAnswer.setText(choices[3]);
+                            for(int i = 0; i < buttons.length; i++){
+                                ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
+                                params.width = buttons[i].getWidth();
+                                buttons[i].setLayoutParams(params);
+
+                                buttons[i].setText(choices[i]);
+                                imageViews[i].setElevation(0);
+                                enableButton(buttons[i]);
+                            }
                             pbWait.setVisibility(View.INVISIBLE);
                             mainLayout.setVisibility(View.VISIBLE);
-                            ivFirst.setElevation(0);
-                            ivSecond.setElevation(0);
-                            ivThird.setElevation(0);
-                            ivFourth.setElevation(0);
-                            enableButton(btnFirstAnswer);
-                            enableButton(btnSecondAnswer);
-                            enableButton(btnThirdAnswer);
-                            enableButton(btnFourthAnswer);
                         }
                     });
 
@@ -187,51 +205,29 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            setProgressAnimate((ProgressBar) findViewById(R.id.progressBarToday), timeLeft);
+
                             tv_number_of_answers.setText(Integer.toString(number_of_answers));
                             ((ProgressBar) findViewById(R.id.progressBarToday))
                                     .setProgress(timeLeft);
+
                             ((TextView) findViewById(R.id.tv_remaining_time)).
                                     setText(String.valueOf(timeLeft));
                             if (timeLeft == 0) {
                                 Log.i("True Answer is ", "" + trueAnswerIndex);
-                                if(trueAnswerIndex == 0) {
-                                    btnFirstAnswer.setAlpha(1);
-                                    btnSecondAnswer.setAlpha((float) 0.5);
-                                    btnThirdAnswer.setAlpha((float) 0.5);
-                                    btnFourthAnswer.setAlpha((float) 0.5);
-                                    ivFirst.setElevation(10);
-                                    ivSecond.setElevation(0);
-                                    ivThird.setElevation(0);
-                                    ivFourth.setElevation(0);
-                                }else if (trueAnswerIndex == 1) {
-                                    btnSecondAnswer.setAlpha(1);
-                                    btnFirstAnswer.setAlpha((float) 0.5);
-                                    btnThirdAnswer.setAlpha((float) 0.5);
-                                    btnFourthAnswer.setAlpha((float) 0.5);
-                                    ivSecond.setElevation(10);
-                                    ivFirst.setElevation(0);
-                                    ivThird.setElevation(0);
-                                    ivFourth.setElevation(0);
-                                }else if (trueAnswerIndex == 2) {
-                                    btnThirdAnswer.setAlpha(1);
-                                    btnSecondAnswer.setAlpha((float) 0.5);
-                                    btnFirstAnswer.setAlpha((float) 0.5);
-                                    btnFourthAnswer.setAlpha((float) 0.5);
-                                    ivThird.setElevation(10);
-                                    ivSecond.setElevation(0);
-                                    ivFirst.setElevation(0);
-                                    ivFourth.setElevation(0);
-                                }else if (trueAnswerIndex == 3) {
-                                    btnFourthAnswer.setAlpha(1);
-                                    btnSecondAnswer.setAlpha((float) 0.5);
-                                    btnThirdAnswer.setAlpha((float) 0.5);
-                                    btnFirstAnswer.setAlpha((float) 0.5);
-                                    ivFourth.setElevation(10);
-                                    ivSecond.setElevation(0);
-                                    ivThird.setElevation(0);
-                                    ivFirst.setElevation(0);
+                                for(int i = 0; i < buttons.length; i++) {
+                                    if(trueAnswerIndex == i){
+                                        buttons[i].setAlpha(1);
+                                        imageViews[i].setElevation(10);
+                                    } else{
+                                        buttons[i].setAlpha((float) 0.5);
+                                        imageViews[i].setElevation(0);
+                                    }
                                 }
+
                             }
+
+
                         }
                     });
                 } catch (JSONException e) {
@@ -247,7 +243,25 @@ public class GameActivity extends AppCompatActivity {
                 JSONObject object = (JSONObject) args[0];
                 try {
                     String scoreboardStr = object.getJSONArray("scoreboard").toString();
-                    String summaryStr = object.getJSONArray("summary").toString();
+                    final JSONArray summary = object.getJSONArray("summary");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                for(int i = 0; i < buttons.length; i++) {
+                                    ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
+                                    params.width = (int)(buttons[i].getWidth() * summary.getDouble(i));
+
+                                    buttons[i].setLayoutParams(params);
+
+                                    buttons[i].setText("%" + ((int)(summary.getDouble(i)*100)));
+                                }
+
+                            }catch (Exception e){
+                                Log.i("LAN", "HEYHEY");
+                            }
+                            }});
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -261,37 +275,36 @@ public class GameActivity extends AppCompatActivity {
 
     public void gameOnClick(View view) throws JSONException {
         System.out.println("works");
+
         switch (view.getId()) {
             case R.id.btn_first_answer:
                 choice = 0;
-                btnSecondAnswer.setAlpha((float) 0.5);
-                btnThirdAnswer.setAlpha((float) 0.5);
-                btnFourthAnswer.setAlpha((float) 0.5);
+                buttons[1].setAlpha((float) 0.5);
+                buttons[2].setAlpha((float) 0.5);
+                buttons[3].setAlpha((float) 0.5);
                 break;
             case R.id.btn_second_answer:
                 choice = 1;
-                btnFirstAnswer.setAlpha((float) 0.5);
-                btnThirdAnswer.setAlpha((float) 0.5);
-                btnFourthAnswer.setAlpha((float) 0.5);
+                buttons[0].setAlpha((float) 0.5);
+                buttons[2].setAlpha((float) 0.5);
+                buttons[3].setAlpha((float) 0.5);
                 break;
             case R.id.btn_third_answer:
                 choice = 2;
-                btnSecondAnswer.setAlpha((float) 0.5);
-                btnFirstAnswer.setAlpha((float) 0.5);
-                btnFourthAnswer.setAlpha((float) 0.5);
+                buttons[1].setAlpha((float) 0.5);
+                buttons[0].setAlpha((float) 0.5);
+                buttons[3].setAlpha((float) 0.5);
                 break;
             case R.id.btn_fourth_answer:
                 choice = 3;
-                btnSecondAnswer.setAlpha((float) 0.5);
-                btnThirdAnswer.setAlpha((float) 0.5);
-                btnFirstAnswer.setAlpha((float) 0.5);
+                buttons[1].setAlpha((float) 0.5);
+                buttons[2].setAlpha((float) 0.5);
+                buttons[0].setAlpha((float) 0.5);
                 break;
         }
-
-        btnFirstAnswer.setEnabled(false);
-        btnSecondAnswer.setEnabled(false);
-        btnThirdAnswer.setEnabled(false);
-        btnFourthAnswer.setEnabled(false);
+        for(int i = 0; i < buttons.length; i++){
+            buttons[i].setEnabled(false);
+        }
 
         System.out.println(choice);
 
