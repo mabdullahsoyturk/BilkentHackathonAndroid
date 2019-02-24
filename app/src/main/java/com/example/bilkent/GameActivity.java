@@ -187,24 +187,36 @@ public class GameActivity extends AppCompatActivity {
                                 Log.i("True Answer is ", "" + trueAnswerIndex);
                                 if(trueAnswerIndex == 0) {
                                     btnFirstAnswer.setAlpha(1);
+                                    btnSecondAnswer.setAlpha((float) 0.5);
+                                    btnThirdAnswer.setAlpha((float) 0.5);
+                                    btnFourthAnswer.setAlpha((float) 0.5);
                                     ivFirst.setElevation(10);
                                     ivSecond.setElevation(0);
                                     ivThird.setElevation(0);
                                     ivFourth.setElevation(0);
                                 }else if (trueAnswerIndex == 1) {
                                     btnSecondAnswer.setAlpha(1);
+                                    btnFirstAnswer.setAlpha((float) 0.5);
+                                    btnThirdAnswer.setAlpha((float) 0.5);
+                                    btnFourthAnswer.setAlpha((float) 0.5);
                                     ivSecond.setElevation(10);
                                     ivFirst.setElevation(0);
                                     ivThird.setElevation(0);
                                     ivFourth.setElevation(0);
                                 }else if (trueAnswerIndex == 2) {
                                     btnThirdAnswer.setAlpha(1);
+                                    btnSecondAnswer.setAlpha((float) 0.5);
+                                    btnFirstAnswer.setAlpha((float) 0.5);
+                                    btnFourthAnswer.setAlpha((float) 0.5);
                                     ivThird.setElevation(10);
                                     ivSecond.setElevation(0);
                                     ivFirst.setElevation(0);
                                     ivFourth.setElevation(0);
                                 }else if (trueAnswerIndex == 3) {
                                     btnFourthAnswer.setAlpha(1);
+                                    btnSecondAnswer.setAlpha((float) 0.5);
+                                    btnThirdAnswer.setAlpha((float) 0.5);
+                                    btnFirstAnswer.setAlpha((float) 0.5);
                                     ivFourth.setElevation(10);
                                     ivSecond.setElevation(0);
                                     ivThird.setElevation(0);
@@ -228,22 +240,34 @@ public class GameActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.btn_first_answer:
                 choice = 0;
+                btnSecondAnswer.setAlpha((float) 0.5);
+                btnThirdAnswer.setAlpha((float) 0.5);
+                btnFourthAnswer.setAlpha((float) 0.5);
                 break;
             case R.id.btn_second_answer:
                 choice = 1;
+                btnFirstAnswer.setAlpha((float) 0.5);
+                btnThirdAnswer.setAlpha((float) 0.5);
+                btnFourthAnswer.setAlpha((float) 0.5);
                 break;
             case R.id.btn_third_answer:
                 choice = 2;
+                btnSecondAnswer.setAlpha((float) 0.5);
+                btnFirstAnswer.setAlpha((float) 0.5);
+                btnFourthAnswer.setAlpha((float) 0.5);
                 break;
             case R.id.btn_fourth_answer:
                 choice = 3;
+                btnSecondAnswer.setAlpha((float) 0.5);
+                btnThirdAnswer.setAlpha((float) 0.5);
+                btnFirstAnswer.setAlpha((float) 0.5);
                 break;
         }
 
-        disableButton(btnFirstAnswer);
-        disableButton(btnSecondAnswer);
-        disableButton(btnThirdAnswer);
-        disableButton(btnFourthAnswer);
+        btnFirstAnswer.setEnabled(false);
+        btnSecondAnswer.setEnabled(false);
+        btnThirdAnswer.setEnabled(false);
+        btnFourthAnswer.setEnabled(false);
 
         System.out.println(choice);
 
