@@ -230,7 +230,6 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 JSONObject object = (JSONObject) args[0];
                 try {
-                    String scoreboardStr = object.getJSONArray("scoreboard").toString();
                     final JSONArray summary = object.getJSONArray("summary");
                     runOnUiThread(new Runnable() {
                         @Override
@@ -246,7 +245,6 @@ public class GameActivity extends AppCompatActivity {
 
                                     buttons[i].setText("%" + ((int) (summary.getDouble(i) * 100)));
                                     buttons[i].setLayoutParams(params);
-
                                 }
 
                             } catch (Exception e) {
