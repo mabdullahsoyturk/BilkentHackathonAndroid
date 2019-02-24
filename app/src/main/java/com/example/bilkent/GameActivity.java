@@ -41,6 +41,7 @@ public class GameActivity extends AppCompatActivity {
     int trueAnswerIndex = 0;
     int choice = -1;
     int number_of_answers = 0;
+    int button_width;
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
@@ -88,6 +89,8 @@ public class GameActivity extends AppCompatActivity {
         buttons[1] = findViewById(R.id.btn_second_answer);
         buttons[2] = findViewById(R.id.btn_third_answer);
         buttons[3] = findViewById(R.id.btn_fourth_answer);
+
+        button_width = buttons[0].getWidth();
 
         imageViews = new ImageView[4];
         imageViews[0] = findViewById(R.id.iv_first);
@@ -174,7 +177,7 @@ public class GameActivity extends AppCompatActivity {
                             ((TextView) findViewById(R.id.tv_question)).setText(text);
                             for(int i = 0; i < buttons.length; i++){
                                 ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
-                                params.width = buttons[i].getWidth();
+                                params.width = button_width;
                                 buttons[i].setLayoutParams(params);
 
                                 buttons[i].setText(choices[i]);
@@ -250,11 +253,15 @@ public class GameActivity extends AppCompatActivity {
                             try {
                                 for(int i = 0; i < buttons.length; i++) {
                                     ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
-                                    params.width = (int)(buttons[i].getWidth() * summary.getDouble(i));
+                                    double weight = summary.getDouble(i);
 
-                                    buttons[i].setLayoutParams(params);
+                                    if(weight < 0.05)
+                                        weight = 0.1;
+                                    params.width = (int)(buttons[i].getWidth() * weight);
 
                                     buttons[i].setText("%" + ((int)(summary.getDouble(i)*100)));
+                                    buttons[i].setLayoutParams(params);
+
                                 }
 
                             }catch (Exception e){
