@@ -21,4 +21,6 @@
     <string name="connect" translatable="true">Connect</string>
     <string name="connect_waiting" translatable="true">Connect…</string>
     <string name="zero" translatable="false">0</string>
+    <string name="username">Username</string>
+    <string name="score">Score</string>
 </resources>
