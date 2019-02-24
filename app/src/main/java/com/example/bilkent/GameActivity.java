@@ -2,13 +2,6 @@ package com.example.bilkent;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.graphics.Bitmap;
-import android.graphics.BlurMaskFilter;
-import android.graphics.Canvas;
-import android.graphics.LinearGradient;
-import android.graphics.Paint;
-import android.graphics.Shader;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -38,12 +31,12 @@ public class GameActivity extends AppCompatActivity {
     int choice = -1;
     int number_of_answers = 0;
     int button_width;
+    String name;
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
     Button[] buttons;
 
-    ImageView ivFirst, ivSecond, ivThird, ivFourth;
     ImageView[] imageViews;
 
     ObjectAnimator progressBarAnimation;
@@ -55,10 +48,6 @@ public class GameActivity extends AppCompatActivity {
         btn.setAlpha(1);
     }
 
-    private void disableButton(Button btn) {
-        btn.setEnabled(false);
-        btn.setAlpha((float) 0.5);
-    }
 
     private void setProgressAnimate(ProgressBar pb, int progressTo) {
         if (progressBarAnimation != null) {
@@ -241,6 +230,15 @@ public class GameActivity extends AppCompatActivity {
                 JSONObject object = (JSONObject) args[0];
                 try {
                     final JSONArray scoreboard = object.getJSONArray("scoreboard");
+                    int order = -1;
+                    for (int i = 0; i < scoreboard.length(); i++) {
+                        if(scoreboard.getJSONObject(i).getString("phoneId").equals(uniqueID)){
+                            order = i;
+                            break;
+                        }
+                    }
+
+                    final int finalOrder = order;
 
                     final JSONArray summary = object.getJSONArray("summary");
 
@@ -248,18 +246,23 @@ public class GameActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             try {
-                                for(int i = 0; i < buttons.length; i++) {
+                                if(finalOrder != -1){
+                                    ((TextView)findViewById(R.id.tv_ranking)).
+                                            setText(String.valueOf(finalOrder + 1));
+                                }
+
+                                for (int i = 0; i < buttons.length; i++) {
                                     final int j = i;
 
                                     double weight = summary.getDouble(j);
-                                    if(weight < 0.33)
+                                    if (weight < 0.33)
                                         weight = 0.33;
-                                    else if(weight < 0.7)
-                                        weight+=0.1;
+                                    else if (weight < 0.7)
+                                        weight += 0.1;
 
-                                    buttons[j].setText("%" + ((int)(summary.getDouble(j)*100)));
+                                    buttons[j].setText("%" + ((int) (summary.getDouble(j) * 100)));
 
-                                    if(anims[j] != null){
+                                    if (anims[j] != null) {
                                         anims[j].cancel();
                                     }
                                     anims[j] = ValueAnimator.ofInt(buttons[j].getMeasuredWidth(), (int) (buttons[j].getMeasuredWidth() * weight));
@@ -280,8 +283,8 @@ public class GameActivity extends AppCompatActivity {
 
                                 }
 
-                            } catch (Exception e) {
-                                Log.i("LAN", "HEYHEY");
+                            } catch (Exception ignore) {
+
                             }
                         }
                     });
