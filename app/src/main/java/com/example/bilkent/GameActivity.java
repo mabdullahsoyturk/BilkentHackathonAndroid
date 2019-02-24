@@ -2,6 +2,7 @@ package com.example.bilkent;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -163,7 +164,7 @@ public class GameActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            setTitle(username);
+                            getSupportActionBar().setTitle(username);
                             ((TextView) findViewById(R.id.tv_question)).setText(text);
                             for (int i = 0; i < buttons.length; i++) {
                                 ViewGroup.LayoutParams params = buttons[i].getLayoutParams();
