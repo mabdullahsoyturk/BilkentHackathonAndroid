@@ -22,8 +22,8 @@
                 android:layout_width="33dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/checkmark"
                 android:contentDescription="@string/content_description"
+                android:src="@drawable/checkmark"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_first_answer"
                 app:layout_constraintEnd_toEndOf="@+id/btn_first_answer"
                 app:layout_constraintTop_toTopOf="@+id/btn_first_answer"
@@ -45,8 +45,8 @@
                 android:layout_width="33dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/checkmark"
                 android:contentDescription="@string/content_description"
+                android:src="@drawable/checkmark"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_third_answer"
                 app:layout_constraintEnd_toEndOf="@+id/btn_third_answer"
                 app:layout_constraintTop_toTopOf="@+id/btn_third_answer" />
@@ -56,8 +56,8 @@
                 android:layout_width="33dp"
                 android:layout_height="24dp"
                 android:layout_marginEnd="20dp"
-                android:src="@drawable/checkmark"
                 android:contentDescription="@string/content_description"
+                android:src="@drawable/checkmark"
                 app:layout_constraintBottom_toBottomOf="@+id/btn_fourth_answer"
                 app:layout_constraintEnd_toEndOf="@+id/btn_fourth_answer"
                 app:layout_constraintTop_toTopOf="@+id/btn_fourth_answer" />
@@ -68,7 +68,7 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="72dp"
                 android:layout_marginEnd="8dp"
                 android:indeterminate="false"
                 android:max="20"
@@ -87,83 +87,77 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:text="@string/question"
-                android:textAlignment="center"
                 android:textSize="24sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.422" />
+                app:layout_constraintTop_toBottomOf="@+id/progressBarToday" />
 
             <Button
-                android:onClick="gameOnClick"
                 android:id="@+id/btn_first_answer"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/colorRed"
+                android:onClick="gameOnClick"
                 android:text="@string/first_answer"
                 android:textColor="@color/textColor"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btn_second_answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.651" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:onClick="gameOnClick"
                 android:id="@+id/btn_second_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/colorBlue"
+                android:onClick="gameOnClick"
                 android:text="@string/second_answer"
                 android:textColor="@color/textColor"
+                app:layout_constraintBottom_toTopOf="@+id/btn_third_answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_first_answer" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:onClick="gameOnClick"
                 android:id="@+id/btn_third_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/colorOrange"
+                android:onClick="gameOnClick"
                 android:text="@string/third_answer"
                 android:textColor="@color/textColor"
+                app:layout_constraintBottom_toTopOf="@+id/btn_fourth_answer"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_second_answer" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
-                android:onClick="gameOnClick"
                 android:id="@+id/btn_fourth_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/colorGreen"
+                android:onClick="gameOnClick"
                 android:text="@string/fourth_answer"
                 android:textColor="@color/textColor"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_third_answer" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/tv_remaining_time"
@@ -184,22 +178,64 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
                 android:text="@string/zero"
                 android:textSize="36sp"
-                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toEndOf="@+id/iv_answered_icon"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:id="@+id/iv_answered_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_number_of_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_done_all_24px" />
+                app:srcCompat="@drawable/ic_baseline_done_all_24px"
+                android:contentDescription="@string/description_answers"/>
+
+            <ImageView
+                android:id="@+id/iv_ranking_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="64dp"
+                android:contentDescription="@string/description_ranking"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_baseline_equalizer_24px" />
+
+            <TextView
+                android:id="@+id/tv_ranking"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="@string/question_mark"
+                android:textSize="36sp"
+                app:layout_constraintStart_toEndOf="@+id/iv_ranking_icon"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_answered"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/description_answers"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_answered_icon" />
+
+            <TextView
+                android:id="@+id/tv_ranking_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/description_ranking"
+                app:layout_constraintStart_toStartOf="@+id/iv_ranking_icon"
+                app:layout_constraintTop_toBottomOf="@+id/iv_ranking_icon" />
 
         </android.support.constraint.ConstraintLayout>
 
