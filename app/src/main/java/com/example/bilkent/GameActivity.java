@@ -29,6 +29,7 @@ public class GameActivity extends AppCompatActivity {
     int play, idle, ads, result;
     int trueAnswerIndex = 0;
     int choice = -1;
+    int number_of_answers = 0;
 
     {
         try {
@@ -41,6 +42,7 @@ public class GameActivity extends AppCompatActivity {
     FrameLayout mainLayout;
     Button btnFirstAnswer, btnSecondAnswer, btnThirdAnswer, btnFourthAnswer;
     ImageView ivFirst, ivSecond, ivThird, ivFourth;
+    TextView tv_number_of_answers;
 
     private void enableButton(Button btn){
         btn.setEnabled(true);
@@ -68,6 +70,8 @@ public class GameActivity extends AppCompatActivity {
         ivSecond = findViewById(R.id.iv_second);
         ivThird = findViewById(R.id.iv_third);
         ivFourth = findViewById(R.id.iv_fourth);
+
+        tv_number_of_answers = findViewById(R.id.tv_number_of_answers);
 
         final int[] categories = getIntent().getIntArrayExtra("categories");
         final JSONObject object = new JSONObject();
@@ -176,9 +180,12 @@ public class GameActivity extends AppCompatActivity {
                     JSONObject object = (JSONObject) args[0];
                     Log.i("Json Came", object.toString());
                     timeLeft = object.getInt("timeLeft");
+                    number_of_answers = object.getInt("numberOfAnswers");
+
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            tv_number_of_answers.setText(Integer.toString(number_of_answers));
                             ((ProgressBar) findViewById(R.id.progressBarToday))
                                     .setProgress(timeLeft);
                             ((TextView) findViewById(R.id.tv_remaining_time)).
@@ -237,6 +244,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void gameOnClick(View view) throws JSONException {
+        System.out.println("works");
         switch (view.getId()) {
             case R.id.btn_first_answer:
                 choice = 0;
