@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.bilkent.DataClasses.UserResult;
+import com.example.bilkent.DataClasses.UsersChoice;
+import com.google.gson.Gson;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,19 +28,13 @@ import io.socket.emitter.Emitter;
 public class GameActivity extends AppCompatActivity {
 
     Socket mSocket;
+    Gson gson;
     String uniqueID;
     int timeLeft;
     int play, idle, ads, result;
     int trueAnswerIndex = 0;
     int choice = -1;
     int number_of_answers = 0;
-
-    {
-        try {
-            mSocket = IO.socket("http://104.248.131.83:8080/quiz");
-        } catch (URISyntaxException ignore) {
-        }
-    }
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
@@ -58,6 +56,10 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+        mSocket = SocketSingleton.getSocket();
+        gson = new Gson();
+
         uniqueID = IDUtil.id(this);
         (pbWait = findViewById(R.id.pb_wait_connect)).setVisibility(View.VISIBLE);
         (mainLayout = findViewById(R.id.fl_main)).setVisibility(View.INVISIBLE);
@@ -232,6 +234,20 @@ public class GameActivity extends AppCompatActivity {
                             }
                         }
                     });
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        mSocket.on("results", new Emitter.Listener() {
+
+            @Override
+            public void call(Object... args) {
+                JSONObject object = (JSONObject) args[0];
+                try {
+                    String scoreboardStr = object.getJSONArray("scoreboard").toString();
+                    String summaryStr = object.getJSONArray("summary").toString();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
