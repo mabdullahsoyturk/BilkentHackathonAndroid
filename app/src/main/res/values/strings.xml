@@ -27,4 +27,5 @@
     <string name="question_mark" translatable="false">"?"</string>
     <string name="description_answers"># answerer</string>
     <string name="description_ranking">Your Ranking</string>
+    <string name="zeros" translatable="false">0000</string>
 </resources>

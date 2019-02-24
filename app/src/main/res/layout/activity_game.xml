@@ -190,14 +190,14 @@
                 android:id="@+id/iv_answered_icon"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:contentDescription="@string/description_answers"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_number_of_answers"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_baseline_done_all_24px"
-                android:contentDescription="@string/description_answers"/>
+                app:srcCompat="@drawable/ic_baseline_done_all_24px" />
 
             <ImageView
                 android:id="@+id/iv_ranking_icon"
@@ -240,6 +240,20 @@
                 android:text="@string/description_ranking"
                 app:layout_constraintStart_toStartOf="@+id/iv_ranking_icon"
                 app:layout_constraintTop_toBottomOf="@+id/iv_ranking_icon" />
+
+            <TextView
+                android:id="@+id/tv_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/zeros"
+                android:textSize="36sp"
+                android:fontFamily="sans-serif-smallcaps"/>
 
         </android.support.constraint.ConstraintLayout>
 

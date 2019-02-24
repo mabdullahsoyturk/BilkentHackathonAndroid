@@ -31,7 +31,6 @@ public class GameActivity extends AppCompatActivity {
     int choice = -1;
     int number_of_answers = 0;
     int button_width;
-    String name;
 
     ProgressBar pbWait;
     FrameLayout mainLayout;
@@ -231,15 +230,17 @@ public class GameActivity extends AppCompatActivity {
                 try {
                     final JSONArray scoreboard = object.getJSONArray("scoreboard");
                     int order = -1;
+                    int score = -1;
                     for (int i = 0; i < scoreboard.length(); i++) {
                         if(scoreboard.getJSONObject(i).getString("phoneId").equals(uniqueID)){
                             order = i;
+                            score = scoreboard.getJSONObject(i).getInt("score");
                             break;
                         }
                     }
 
                     final int finalOrder = order;
-
+                    final int finalScore = score;
                     final JSONArray summary = object.getJSONArray("summary");
 
                     runOnUiThread(new Runnable() {
@@ -249,6 +250,11 @@ public class GameActivity extends AppCompatActivity {
                                 if(finalOrder != -1){
                                     ((TextView)findViewById(R.id.tv_ranking)).
                                             setText(String.valueOf(finalOrder + 1));
+                                }
+
+                                if(finalScore != -1){
+                                    ((TextView)findViewById(R.id.tv_points)).
+                                            setText(String.valueOf(finalScore));
                                 }
 
                                 for (int i = 0; i < buttons.length; i++) {
