@@ -102,6 +102,7 @@
                 app:layout_constraintVertical_bias="0.377" />
 
             <Button
+                android:onClick="gameOnClick"
                 android:id="@+id/btn_first_answer"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
@@ -120,6 +121,7 @@
                 app:layout_constraintVertical_bias="0.561" />
 
             <Button
+                android:onClick="gameOnClick"
                 android:id="@+id/btn_second_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -135,6 +137,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_first_answer" />
 
             <Button
+                android:onClick="gameOnClick"
                 android:id="@+id/btn_third_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,6 +153,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/btn_second_answer" />
 
             <Button
+                android:onClick="gameOnClick"
                 android:id="@+id/btn_fourth_answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

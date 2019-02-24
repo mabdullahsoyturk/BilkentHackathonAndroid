@@ -2,9 +2,11 @@ package com.example.bilkent;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +27,8 @@ public class GameActivity extends AppCompatActivity {
     String uniqueID;
     int timeLeft;
     int play, idle, ads, result;
+    int trueAnswerIndex = 0;
+    int choice = -1;
 
     {
         try {
@@ -36,6 +40,7 @@ public class GameActivity extends AppCompatActivity {
     ProgressBar pbWait;
     FrameLayout mainLayout;
     Button btnFirstAnswer, btnSecondAnswer, btnThirdAnswer, btnFourthAnswer;
+    ImageView ivFirst, ivSecond, ivThird, ivFourth;
 
     private void enableButton(Button btn){
         btn.setEnabled(true);
@@ -59,6 +64,10 @@ public class GameActivity extends AppCompatActivity {
         btnThirdAnswer = findViewById(R.id.btn_third_answer);
         btnFourthAnswer = findViewById(R.id.btn_fourth_answer);
 
+        ivFirst = findViewById(R.id.iv_first);
+        ivSecond = findViewById(R.id.iv_second);
+        ivThird = findViewById(R.id.iv_third);
+        ivFourth = findViewById(R.id.iv_fourth);
 
         final String message = getIntent().getStringExtra("categories");
 
@@ -114,10 +123,12 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 try {
                     JSONObject object = (JSONObject) args[0];
+                    Log.i("Json Came", object.toString());
                     object = object.getJSONObject("question");
                     final String text = object.getString("text");
                     JSONArray choicesJSONArr = object.getJSONArray("choices");
                     final String[] choices = new String[4];
+                    trueAnswerIndex = object.getInt("trueAnswer");
                     for (int i = 0; i < choicesJSONArr.length(); i++) {
                         choices[i] = choicesJSONArr.getString(i);
                     }
@@ -132,6 +143,10 @@ public class GameActivity extends AppCompatActivity {
                             btnFourthAnswer.setText(choices[3]);
                             pbWait.setVisibility(View.INVISIBLE);
                             mainLayout.setVisibility(View.VISIBLE);
+                            ivFirst.setElevation(0);
+                            ivSecond.setElevation(0);
+                            ivThird.setElevation(0);
+                            ivFourth.setElevation(0);
                             enableButton(btnFirstAnswer);
                             enableButton(btnSecondAnswer);
                             enableButton(btnThirdAnswer);
@@ -151,6 +166,7 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 try {
                     JSONObject object = (JSONObject) args[0];
+                    Log.i("Json Came", object.toString());
                     timeLeft = object.getInt("timeLeft");
                     runOnUiThread(new Runnable() {
                         @Override
@@ -160,10 +176,32 @@ public class GameActivity extends AppCompatActivity {
                             ((TextView) findViewById(R.id.tv_remaining_time)).
                                     setText(String.valueOf(timeLeft));
                             if (timeLeft == 0) {
-                                disableButton(btnFirstAnswer);
-                                disableButton(btnSecondAnswer);
-                                disableButton(btnThirdAnswer);
-                                disableButton(btnFourthAnswer);
+                                Log.i("True Answer is ", "" + trueAnswerIndex);
+                                if(trueAnswerIndex == 0) {
+                                    btnFirstAnswer.setAlpha(1);
+                                    ivFirst.setElevation(10);
+                                    ivSecond.setElevation(0);
+                                    ivThird.setElevation(0);
+                                    ivFourth.setElevation(0);
+                                }else if (trueAnswerIndex == 1) {
+                                    btnSecondAnswer.setAlpha(1);
+                                    ivSecond.setElevation(10);
+                                    ivFirst.setElevation(0);
+                                    ivThird.setElevation(0);
+                                    ivFourth.setElevation(0);
+                                }else if (trueAnswerIndex == 2) {
+                                    btnThirdAnswer.setAlpha(1);
+                                    ivThird.setElevation(10);
+                                    ivSecond.setElevation(0);
+                                    ivFirst.setElevation(0);
+                                    ivFourth.setElevation(0);
+                                }else if (trueAnswerIndex == 3) {
+                                    btnFourthAnswer.setAlpha(1);
+                                    ivFourth.setElevation(10);
+                                    ivSecond.setElevation(0);
+                                    ivThird.setElevation(0);
+                                    ivFirst.setElevation(0);
+                                }
                             }
                         }
                     });
@@ -176,6 +214,40 @@ public class GameActivity extends AppCompatActivity {
 
         if (!mSocket.connected())
             mSocket.connect();
+    }
+
+    public void gameOnClick(View view) throws JSONException {
+        switch (view.getId()) {
+            case R.id.btn_first_answer:
+                choice = 0;
+                break;
+            case R.id.btn_second_answer:
+                choice = 1;
+                break;
+            case R.id.btn_third_answer:
+                choice = 2;
+                break;
+            case R.id.btn_fourth_answer:
+                choice = 3;
+                break;
+        }
+
+        disableButton(btnFirstAnswer);
+        disableButton(btnSecondAnswer);
+        disableButton(btnThirdAnswer);
+        disableButton(btnFourthAnswer);
+
+        System.out.println(choice);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("choice", choice);
+
+        mSocket.emit("move", jsonObject, new Emitter.Listener() {
+            @Override
+            public void call(Object... args) {
+
+            }
+        });
     }
 
 }
