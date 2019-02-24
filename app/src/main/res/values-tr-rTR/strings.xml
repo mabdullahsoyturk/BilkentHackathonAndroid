@@ -24,6 +24,6 @@
     <string name="username">Kullnıcı Adı</string>
     <string name="score">Skor</string>
     <string name="you">Sen</string>
-    <string name="description_answers">Cevap Sayısı</string>
+    <string name="description_answers">Cevaplayan</string>
     <string name="description_ranking">Sıralamanız</string>
 </resources>
