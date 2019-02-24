@@ -21,5 +21,7 @@
     <string name="cinema" translatable="true">Sinema</string>
     <string name="connect" translatable="true">Bağlan</string>
     <string name="connect_waiting" translatable="true">Bağlan…</string>
-
+    <string name="username">Kullnıcı Adı</string>
+    <string name="score">Skor</string>
+    <string name="you">Sen</string>
 </resources>
