@@ -2,10 +2,8 @@ package com.example.bilkent;
 
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -151,7 +149,6 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 try {
                     JSONObject object = (JSONObject) args[0];
-                    Log.i("Json Came", object.toString());
                     object = object.getJSONObject("question");
                     final String text = object.getString("text");
                     JSONArray choicesJSONArr = object.getJSONArray("choices");
@@ -192,7 +189,6 @@ public class GameActivity extends AppCompatActivity {
             public void call(Object... args) {
                 try {
                     JSONObject object = (JSONObject) args[0];
-                    Log.i("Json Came", object.toString());
                     timeLeft = object.getInt("timeLeft");
                     number_of_answers = object.getInt("numberOfAnswers");
 
@@ -208,7 +204,6 @@ public class GameActivity extends AppCompatActivity {
                             ((TextView) findViewById(R.id.tv_remaining_time)).
                                     setText(String.valueOf(timeLeft));
                             if (timeLeft == 0) {
-                                Log.i("True Answer is ", "" + trueAnswerIndex);
                                 for (int i = 0; i < buttons.length; i++) {
                                     if (trueAnswerIndex == i) {
                                         buttons[i].setAlpha(1);
@@ -343,8 +338,6 @@ public class GameActivity extends AppCompatActivity {
         for (Button button : buttons) {
             button.setEnabled(false);
         }
-
-        System.out.println(choice);
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("choice", choice);
